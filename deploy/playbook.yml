@@ -1,0 +1,66 @@
+---
+- hosts: all
+
+  vars_files:
+      - ../vars.yml
+
+  tasks:
+    - name: Disable systemd-journald persistence
+      file: path=/var/log/journal/ state=absent
+      notify:
+        - restart journald
+
+    - name: Disable Firstboot
+      service: name=firstboot-graphical state=stopped enabled=no
+
+    - name: Disable Headless mode
+      service: name=headless-mode state=stopped enabled=no
+
+    - name: Boot into multi-user (non-graphical) mode by default
+      file: src=/usr/lib/systemd/system/multi-user.target dest=/etc/systemd/system/default.target owner=root group=root mode=777 state=link
+      notify:
+        - enter default mode
+
+    # - name: Add bot service
+    #   copy: src=../etc/bot.service dest=/etc/systemd/system/bot.service owner=root group=root mode=644
+    #   notify:
+    #     - reload services
+    #     - enable bot service
+    #     - restart bot service
+
+    # Configure wireless
+    # See: http://fedoraproject.org/wiki/Tools/NetworkManager/CLI
+    - name: Configure wireless
+      command: "nmcli device wifi connect {{wifi_ssid}} password {{wifi_psk}} creates=/etc/sysconfig/network-scripts/ifcfg-{{wifi_ssid}}"
+
+    # Build sixpair
+    # TODO: Unmask+enable the bluetooth service?
+    # TODO: Run `systemctl stop bluetooth` to stop bluetooth, for some reason
+    # TODO: Then run `hciconfig hci0 up` to enable the device
+    - name: Build sixpair
+      script: build-sixpair.sh creates=/usr/local/bin/sixpair
+
+    # Build QtSixA
+    # http://qtsixa.sourceforge.net
+    - name: Build QsSixA
+      script: build-qtsixa.sh creates=/usr/bin/sixad
+
+  #   #  Start sixad at boot
+  #   - service: name=bluetooth state=started enabled=yes
+  #   - service: name=sixad state=started enabled=yes
+
+  handlers:
+    - name: enter default mode
+      command: systemctl default
+
+    - name: restart journald
+      service: name=systemd-journald state=restarted
+
+    - name: reload services
+      command: systemctl daemon-reload
+
+    - name: enable bot service
+      service: name=bot enabled=yes
+
+    - name: restart bot service
+      service: name=bot state=restarted

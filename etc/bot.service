@@ -1,0 +1,11 @@
+[Unit]
+Description=Bot
+
+[Service]
+User=root
+ExecStart=/root/bot -cpuprofile=/root/bot.prof
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
