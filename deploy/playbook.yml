@@ -33,9 +33,6 @@
     - name: Configure wireless
       command: "nmcli device wifi connect {{wifi_ssid}} password {{wifi_psk}} creates=/etc/sysconfig/network-scripts/ifcfg-{{wifi_ssid}}"
 
-    # TODO: Unmask+enable the bluetooth service?
-    # TODO: Run `systemctl stop bluetooth` to stop bluetooth, for some reason
-    # TODO: Then run `hciconfig hci0 up` to enable the device
     - name: Build sixpair
       script: build-sixpair.sh creates=/usr/local/bin/sixpair
 
