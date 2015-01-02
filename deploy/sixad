@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+# Sixad can't seem to hear the controller's attempts to pair until the bluetooth
+# service is started... and then stopped. I have no idea why this is necessary,
+# but I'm guessing that bluetoothd somehow initializes the device, but blocks
+# some resource while it's running. This is a bit embarrassing, but it works
+# reliably. I suspect that it's possible to replace this with a magical
+# invocation of hciconfig with the right flags.
+systemctl start bluetooth
+systemctl stop bluetooth
+
+# When the bluetooth service is stopped, the device is shut down. So we must
+# start it up again without starting the service.
+hciconfig hci0 up
+
+# Finally, call sixad-bin, which starts listening for the controller. This is
+# the actual entry point to sixad, since the upstream 'sixad' program, which
+# this script replaces, is a sysv-style init script.
+sixad-bin 0 0 0

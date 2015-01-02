@@ -1,0 +1,10 @@
+[Unit]
+Description=Sixaxis Bluetooth Interface
+
+[Service]
+ExecStart=/usr/bin/sixad
+User=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

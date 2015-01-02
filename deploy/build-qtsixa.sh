@@ -5,4 +5,7 @@ wget https://github.com/falkTX/qtsixa/archive/master.zip
 unzip master.zip
 cd qtsixa-master/sixad
 make
-make install
+
+# Just copy the stuff we need, rather than make install
+mv bins/sixad-bin /usr/sbin/sixad-bin
+mv bins/sixad-sixaxis /usr/sbin/sixad-sixaxis

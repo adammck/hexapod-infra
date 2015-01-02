@@ -33,21 +33,35 @@
     - name: Configure wireless
       command: "nmcli device wifi connect {{wifi_ssid}} password {{wifi_psk}} creates=/etc/sysconfig/network-scripts/ifcfg-{{wifi_ssid}}"
 
-    # Build sixpair
     # TODO: Unmask+enable the bluetooth service?
     # TODO: Run `systemctl stop bluetooth` to stop bluetooth, for some reason
     # TODO: Then run `hciconfig hci0 up` to enable the device
     - name: Build sixpair
       script: build-sixpair.sh creates=/usr/local/bin/sixpair
 
-    # Build QtSixA
+    - name: Add Sixaxis USB udev rules
+      copy: src=../etc/10-sixaxis-usb.rules dest=/etc/udev/rules.d/10-sixaxis-usb.rules owner=root group=root mode=0644
+      notify:
+        - reload udev rules
+
     # http://qtsixa.sourceforge.net
-    - name: Build QsSixA
-      script: build-qtsixa.sh creates=/usr/bin/sixad
+    - name: Build Sixad
+      script: build-qtsixa.sh creates=/usr/sbin/sixad-bin
+
+    - name: Copy sixad startup script
+      copy: src=sixad dest=/usr/bin/sixad owner=root group=root mode=755
+
+    - name: Add sixad service
+      copy: src=../etc/sixad.service dest=/etc/systemd/system/sixad.service owner=root group=root mode=644
+      notify:
+        - reload services
+        - enable sixad service
+        - restart sixad service
 
   #   #  Start sixad at boot
   #   - service: name=bluetooth state=started enabled=yes
   #   - service: name=sixad state=started enabled=yes
+
 
   handlers:
     - name: enter default mode
@@ -55,6 +69,9 @@
 
     - name: restart journald
       service: name=systemd-journald state=restarted
+
+    - name: reload udev rules
+      command: udevadm control --reload-rules
 
     - name: reload services
       command: systemctl daemon-reload
@@ -64,3 +81,9 @@
 
     - name: restart bot service
       service: name=bot state=restarted
+
+    - name: enable sixad service
+      service: name=sixad enabled=yes
+
+    - name: restart sixad service
+      service: name=sixad state=restarted

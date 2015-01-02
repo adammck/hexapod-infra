@@ -1,0 +1,2 @@
+# Run sixpair to pair any Sixaxis controller when plugged in
+SUBSYSTEM=="usb", ACTION=="add", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="0268", RUN+="/usr/local/bin/sixpair"
