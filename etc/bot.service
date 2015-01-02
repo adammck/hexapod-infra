@@ -1,9 +1,9 @@
 [Unit]
-Description=Bot
+Description=Hexapod
 
 [Service]
+ExecStart=/root/bot
 User=root
-ExecStart=/root/bot -cpuprofile=/root/bot.prof
 Restart=always
 RestartSec=5
 

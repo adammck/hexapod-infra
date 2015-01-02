@@ -21,13 +21,6 @@
       notify:
         - enter default mode
 
-    # - name: Add bot service
-    #   copy: src=../etc/bot.service dest=/etc/systemd/system/bot.service owner=root group=root mode=644
-    #   notify:
-    #     - reload services
-    #     - enable bot service
-    #     - restart bot service
-
     # Configure wireless
     # See: http://fedoraproject.org/wiki/Tools/NetworkManager/CLI
     - name: Configure wireless
@@ -55,10 +48,12 @@
         - enable sixad service
         - restart sixad service
 
-  #   #  Start sixad at boot
-  #   - service: name=bluetooth state=started enabled=yes
-  #   - service: name=sixad state=started enabled=yes
-
+    - name: Add bot service
+      copy: src=../etc/bot.service dest=/etc/systemd/system/bot.service owner=root group=root mode=644
+      notify:
+        - reload services
+        - enable bot service
+        - restart bot service
 
   handlers:
     - name: enter default mode
