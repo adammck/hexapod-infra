@@ -1,2 +1,0 @@
-# SNES RetroPort: Mount as user=root, group=input, mode=660
-SUBSYSTEM=="hidraw", ATTRS{idVendor}=="f000", ATTRS{idProduct}=="00f1", GROUP="input", MODE="0660"
