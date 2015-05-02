@@ -1,3 +1,4 @@
 #!/bin/bash -e
+systemctl stop bluetooth
 hciconfig hci0 up pscan
 sixad-bin 0 0 0

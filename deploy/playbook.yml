@@ -5,21 +5,11 @@
       - ../vars.yml
 
   tasks:
-    - name: Disable systemd-journald persistence
-      file: path=/var/log/journal/ state=absent
-      notify:
-        - restart journald
+    - name: Update all packages
+      yum: name=* state=latest
 
-    - name: Disable Firstboot
-      service: name=firstboot-graphical state=stopped enabled=no
-
-    - name: Disable Headless mode
-      service: name=headless-mode state=stopped enabled=no
-
-    - name: Boot into multi-user (non-graphical) mode by default
-      file: src=/usr/lib/systemd/system/multi-user.target dest=/etc/systemd/system/default.target owner=root group=root mode=777 state=link
-      notify:
-        - enter default mode
+    - name: Install NetworkManager wifi plugin
+      yum: name=NetworkManager-wifi state=installed
 
     # Configure wireless
     # See: http://fedoraproject.org/wiki/Tools/NetworkManager/CLI
@@ -56,11 +46,6 @@
         - restart bot service
 
   handlers:
-    - name: enter default mode
-      command: systemctl default
-
-    - name: restart journald
-      service: name=systemd-journald state=restarted
 
     - name: reload udev rules
       command: udevadm control --reload-rules
@@ -68,14 +53,14 @@
     - name: reload services
       command: systemctl daemon-reload
 
-    - name: enable bot service
-      service: name=bot enabled=yes
-
-    - name: restart bot service
-      service: name=bot state=restarted
-
     - name: enable sixad service
       service: name=sixad enabled=yes
 
     - name: restart sixad service
       service: name=sixad state=restarted
+
+    - name: enable bot service
+      service: name=bot enabled=yes
+
+    - name: restart bot service
+      service: name=bot state=restarted
