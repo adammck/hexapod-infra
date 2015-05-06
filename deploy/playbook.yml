@@ -5,6 +5,11 @@
       - ../vars.yml
 
   tasks:
+    - name: Disable journald persistence
+      file: path=/var/log/journal/ state=absent
+      notify:
+        - restart journald
+
     - name: Update all packages
       yum: name=* state=latest
 
@@ -46,6 +51,9 @@
         - restart bot service
 
   handlers:
+
+    - name: restart journald
+      service: name=systemd-journald state=restarted
 
     - name: reload udev rules
       command: udevadm control --reload-rules
