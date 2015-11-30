@@ -18,6 +18,6 @@ ssh root@$HOST mkdir -p .ssh
 rsync -p etc/authorized_keys root@$HOST:.ssh/authorized_keys
 
 # Install Avahi (Zeroconf), set the hostname, and start avahi
-ssh root@$HOST yum install -y -q avahi avahi-tools nss-mdns
+ssh root@$HOST dnf install -y -q avahi avahi-tools nss-mdns
 ssh root@$HOST hostnamectl set-hostname --static $HEXAPOD_HOST
 ssh root@$HOST systemctl start avahi-daemon
