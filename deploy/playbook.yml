@@ -23,6 +23,14 @@
     - name: Configure wireless
       command: "nmcli device wifi connect {{wifi_ssid}} password {{wifi_psk}} creates=/etc/sysconfig/network-scripts/ifcfg-{{wifi_ssid}}"
 
+    - name: Install Bluez
+      dnf: name=bluez state=installed
+
+    # My Bluetooth dongle isn't supported out of the bot any more.
+    # See: http://plugable.com/2014/06/23/plugable-usb-bluetooth-adapter-solving-hfphsp-profile-issues-on-linux
+    - name: Add firmware patch for Bluetooth adapter
+      get_url: url=https://s3.amazonaws.com/plugable/bin/fw-0a5c_21e8.hcd dest=/lib/firmware/brcm/BCM20702A0-0a5c-21e8.hcd owner=root group=root mode=0644 sha256sum=d699c13fe1e20c068a8a88dbbed49edc12527b0ceeeaac3411e3298573451536
+
     - name: Build sixpair
       script: build-sixpair.sh creates=/usr/local/bin/sixpair
 
