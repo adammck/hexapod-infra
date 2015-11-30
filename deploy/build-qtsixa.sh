@@ -18,3 +18,4 @@ mv qtsixa-master/sixad/bins/sixad-sixaxis /usr/sbin/sixad-sixaxis
 
 # Cleanup
 rm -rf qtsixa-master
+rm -f master.zip
