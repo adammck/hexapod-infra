@@ -16,20 +16,22 @@ That just involves pushing a new binary and bouncing the `bot` service.
 
 ## Usage
 
-1. Write Fedora 21 (armfp, Minimal) to an SD card. Unfortunately, the RPi2 isn't
+1. Write Fedora 23 (armfp, Minimal) to an SD card. Unfortunately, the RPi2 isn't
    supported by the official images, because it requires proprietary firmware to
    boot, so use [rpi2-fedora-image-builder](https://github.com/adammck/rpi2-fedora-image-builder)
    to build a bootable image.
 
-2. Plug in an Ethernet cable, and boot it up.
+2. Plug in an Ethernet cable, and boot it up. It's not possible to boot straight
+   to wifi, because the Fedora minimal armhfp images don't include wifi. We have
+   to set that up later with Ansible.
 
 3. Set up zeroconf hostname and SSH keys:
 
         HEXAPOD_HOST="hexapod.local" \
         bin/preflight 192.168.1.2
 
-   You'll need to find the RPi's IP address for that, which can be a pain in the
-   ass. You only need to do this once.
+   You'll need to find the RPi's Ethernet IP address for that, which can be a
+   pain in the ass. You only need to do this once.
 
 4. Create (and modify) `vars.yml` with secrets:
    
