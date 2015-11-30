@@ -21,3 +21,6 @@ rsync -p etc/authorized_keys root@$HOST:.ssh/authorized_keys
 ssh root@$HOST dnf install -y -q avahi avahi-tools nss-mdns
 ssh root@$HOST hostnamectl set-hostname --static $HEXAPOD_HOST
 ssh root@$HOST systemctl start avahi-daemon
+
+# Install Python2 and DNF bindings, for Ansible
+ssh root@$HOST dnf install -y -q python2 python-dnf
