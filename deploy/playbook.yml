@@ -6,8 +6,9 @@
 
   tasks:
 
+    # This takes FOREVER on Fedora 23, but seems like a good idea nevertheless.
     - name: Update all packages
-      yum: name=* state=latest
+      dnf: name=* state=latest
 
     - name: Disable journald persistence
       file: path=/var/log/journal/ state=absent
@@ -15,7 +16,7 @@
         - restart journald
 
     - name: Install NetworkManager wifi plugin
-      yum: name=NetworkManager-wifi state=installed
+      dnf: name=NetworkManager-wifi state=installed
 
     # Configure wireless
     # See: http://fedoraproject.org/wiki/Tools/NetworkManager/CLI
