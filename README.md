@@ -18,7 +18,7 @@ That just involves pushing a new binary and bouncing the `bot` service.
 
 1. Write Fedora 23 (armfp, Minimal) to an SD card. Unfortunately, the RPi2 isn't
    supported by the official images, because it requires proprietary firmware to
-   boot, so use [rpi2-fedora-image-builder](https://github.com/adammck/rpi2-fedora-image-builder)
+   boot, so use [rpi2-fedora-image-builder](https://github.com/spartacus06/rpi2-fedora-image-builder)
    to build a bootable image.
 
 2. Plug in an Ethernet cable, and boot it up. It's not possible to boot straight
