@@ -6,6 +6,9 @@
 
   tasks:
 
+    - name: Configure DNF
+      copy: src=../etc/dnf.conf dest=/etc/dnf/dnf.conf owner=root group=root mode=644
+
     # This takes FOREVER on Fedora 23, but seems like a good idea nevertheless.
     - name: Update all packages
       dnf: name=* state=latest
