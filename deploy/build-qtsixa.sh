@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 # Install build deps
-yum install unzip gcc-c++ bluez-libs-devel -y
+dnf install unzip gcc-c++ bluez-libs-devel -y
 
 # Fetch source
 curl --output master.zip --location https://github.com/falkTX/qtsixa/archive/master.zip

@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 # Install build deps
-yum install gcc libusb-devel -y
+dnf install gcc libusb-devel -y
 
 # Fetch source
 curl --output sixpair.c http://www.pabr.org/sixlinux/sixpair.c
