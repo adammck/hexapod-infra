@@ -6,4 +6,4 @@ if [ -z "$HEXAPOD_HOST" ]; then
   exit 1
 fi
 
-ansible-playbook -v -i "pi@$HEXAPOD_HOST," deploy/playbook.yml
+ansible-playbook -v -i "$HEXAPOD_HOST," -u pi deploy/playbook.yml

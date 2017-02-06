@@ -5,6 +5,3 @@ Description=Sixaxis Bluetooth Interface
 ExecStart=/usr/bin/sixad
 User=root
 Restart=always
-
-[Install]
-WantedBy=multi-user.target

@@ -1,27 +1,10 @@
 ---
 - hosts: all
-
+  become: true
   tasks:
 
-    - name: Configure DNF
-      copy: src=../etc/dnf.conf dest=/etc/dnf/dnf.conf owner=root group=root mode=644
-
-    # This takes FOREVER on Fedora 23, but seems like a good idea nevertheless.
     - name: Update all packages
-      dnf: name=* state=latest
-
-    - name: Disable journald persistence
-      file: path=/var/log/journal/ state=absent
-      notify:
-        - restart journald
-
-    - name: Install Bluez
-      dnf: name=bluez state=installed
-
-    # My Bluetooth dongle isn't supported out of the bot any more.
-    # See: http://plugable.com/2014/06/23/plugable-usb-bluetooth-adapter-solving-hfphsp-profile-issues-on-linux
-    - name: Add firmware patch for Bluetooth adapter
-      get_url: url=https://s3.amazonaws.com/plugable/bin/fw-0a5c_21e8.hcd dest=/lib/firmware/brcm/BCM20702A0-0a5c-21e8.hcd owner=root group=root mode=0644 sha256sum=d699c13fe1e20c068a8a88dbbed49edc12527b0ceeeaac3411e3298573451536
+      apt: upgrade=dist
 
     - name: Build sixpair
       script: build-sixpair.sh creates=/usr/local/bin/sixpair
@@ -36,7 +19,7 @@
       script: build-qtsixa.sh creates=/usr/sbin/sixad-bin
 
     - name: Copy sixad startup script
-      copy: src=sixad dest=/usr/bin/sixad owner=root group=root mode=755
+      copy: src=../etc/sixad dest=/usr/bin/sixad owner=root group=root mode=755
 
     - name: Add sixad service
       copy: src=../etc/sixad.service dest=/etc/systemd/system/sixad.service owner=root group=root mode=644
@@ -53,9 +36,6 @@
         - restart bot service
 
   handlers:
-
-    - name: restart journald
-      service: name=systemd-journald state=restarted
 
     - name: reload udev rules
       command: udevadm control --reload-rules

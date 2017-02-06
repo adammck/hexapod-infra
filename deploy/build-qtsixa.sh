@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 # Install build deps
-dnf install unzip gcc-c++ bluez-libs-devel -y
+apt-get install -y libbluetooth-dev
 
 # Fetch source
 curl --output master.zip --location https://github.com/falkTX/qtsixa/archive/master.zip
