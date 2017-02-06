@@ -13,10 +13,6 @@ if [ -z "$HEXAPOD_HOST" ]; then
   exit 1
 fi
 
-# Set SSH keys
-ssh root@$HOST mkdir -p .ssh
-rsync -p etc/authorized_keys root@$HOST:.ssh/authorized_keys
-
 # Install Avahi (Zeroconf), set the hostname, and start avahi
 ssh root@$HOST dnf install -y -q avahi avahi-tools nss-mdns
 ssh root@$HOST hostnamectl set-hostname --static $HEXAPOD_HOST

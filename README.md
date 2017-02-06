@@ -25,7 +25,7 @@ That just involves pushing a new binary and bouncing the `bot` service.
    to wifi, because the Fedora minimal armhfp images don't include wifi. We have
    to set that up later with Ansible.
 
-3. Set up zeroconf hostname and SSH keys:
+3. Set up zeroconf hostname and Ansible dependencies:
 
         HEXAPOD_HOST="hexapod.local" \
         bin/preflight 192.168.1.2
