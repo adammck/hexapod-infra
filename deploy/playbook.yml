@@ -1,9 +1,6 @@
 ---
 - hosts: all
 
-  vars_files:
-      - ../vars.yml
-
   tasks:
 
     - name: Configure DNF
@@ -17,14 +14,6 @@
       file: path=/var/log/journal/ state=absent
       notify:
         - restart journald
-
-    - name: Install NetworkManager wifi plugin
-      dnf: name=NetworkManager-wifi state=installed
-
-    # Configure wireless
-    # See: http://fedoraproject.org/wiki/Tools/NetworkManager/CLI
-    - name: Configure wireless
-      command: "nmcli device wifi connect {{wifi_ssid}} password {{wifi_psk}} creates=/etc/sysconfig/network-scripts/ifcfg-{{wifi_ssid}}"
 
     - name: Install Bluez
       dnf: name=bluez state=installed

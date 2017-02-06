@@ -33,14 +33,7 @@ That just involves pushing a new binary and bouncing the `bot` service.
    You'll need to find the RPi's Ethernet IP address for that, which can be a
    pain in the ass. You only need to do this once.
 
-4. Create (and modify) `vars.yml` with secrets:
-   
-        cp vars.yml.example vars.yml
-
-   This file isn't encrypted, but it's excluded from version control. It doesn't
-   contain anything particularly sensitive, just the wifi password.
-
-5. (Re-)provision with Ansible:
+4. (Re-)provision with Ansible:
 
         HEXAPOD_HOST="hexapod.local" \
         bin/provision
