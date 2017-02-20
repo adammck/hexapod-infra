@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eux
 cd $(cd `dirname "$0"`; cd ..; pwd)
 
 if [ -z "$HEXAPOD_HOST" ]; then

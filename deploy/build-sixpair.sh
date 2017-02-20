@@ -12,5 +12,5 @@ gcc -o sixpair sixpair.c -lusb
 # Install
 mv sixpair /usr/local/bin
 
-# Clean
+# Cleanup
 rm sixpair.c

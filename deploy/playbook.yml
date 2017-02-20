@@ -1,10 +1,11 @@
 ---
 - hosts: all
   become: true
+
   tasks:
 
-    - name: Update all packages
-      apt: upgrade=dist
+    - name: Upgrade all packages
+      apt: update_cache=yes upgrade=dist cache_valid_time=3600
 
     - name: Build sixpair
       script: build-sixpair.sh creates=/usr/local/bin/sixpair
