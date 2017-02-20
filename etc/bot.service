@@ -2,7 +2,7 @@
 Description=Hexapod
 
 [Service]
-ExecStart=/root/bot
+ExecStart=/home/pi/bot
 User=root
 Restart=always
 RestartSec=5

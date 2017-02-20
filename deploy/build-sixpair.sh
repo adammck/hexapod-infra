@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 # Install build deps
-dnf install gcc libusb-devel -y
+apt-get install -y libusb-dev
 
 # Fetch source
 curl --output sixpair.c http://www.pabr.org/sixlinux/sixpair.c
@@ -12,5 +12,5 @@ gcc -o sixpair sixpair.c -lusb
 # Install
 mv sixpair /usr/local/bin
 
-# Clean
+# Cleanup
 rm sixpair.c

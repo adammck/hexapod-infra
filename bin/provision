@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash -eux
 cd $(cd `dirname "$0"`; cd ..; pwd)
 
 if [ -z "$HEXAPOD_HOST" ]; then
@@ -6,4 +6,4 @@ if [ -z "$HEXAPOD_HOST" ]; then
   exit 1
 fi
 
-ansible-playbook -v -i "root@$HEXAPOD_HOST," deploy/playbook.yml
+ansible-playbook -v -i "$HEXAPOD_HOST," -u pi deploy/playbook.yml
